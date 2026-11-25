@@ -1,11 +1,3 @@
-/*
- * ============================================================================
- * PROJETO: Sistema de Gerenciamento de Senhas de Atendimento Clinico
- * DISCIPLINA: Algoritmos e Programacao / Engenharia de Software
- * BIBLIOTECA UTILIZADA: Apenas <stdio.h>
- * ============================================================================
- */
-
 #include <stdio.h>
 
 #define MAX_FILA 100
@@ -16,10 +8,10 @@ typedef struct {
     char categoria;      // 'U' = Urgente, 'P' = Preferencial, 'N' = Normal
     char genero;         // 'M' ou 'F'
     int idade;
-    int gestante;        // 1 = Sim, 0 = Nao
-    int lactante;        // 1 = Sim, 0 = Nao
-    int especial;        // 1 = Sim, 0 = Nao
-    int obeso;           // 1 = Sim, 0 = Nao
+    int gestante;        // 1 = Sim, 0 = Nao : Essa logica e aplicada para gestante, lactante, especial e obeso
+    int lactante;        
+    int especial;        
+    int obeso;          
 } Paciente;
 
 // Filas para cada categoria de atendimento
