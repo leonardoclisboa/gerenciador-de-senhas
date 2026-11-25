@@ -1,0 +1,13 @@
+# Compilados e binários
+*.exe
+*.o
+*.obj
+*.out
+sistema_senhas
+teste_sistema
+
+# Pastas de IDE e temporários
+.vscode/
+.idea/
+*.swp
+*.bak
