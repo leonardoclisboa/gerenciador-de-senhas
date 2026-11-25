@@ -2,15 +2,11 @@
  * ============================================================================
  * PROJETO: Sistema de Gerenciamento de Senhas de Atendimento Clinico
  * DISCIPLINA: Algoritmos e Programacao / Engenharia de Software
- * AUTOR: Estudante de Engenharia de Software (2o Semestre)
- * LINGUAGEM: C
+ * BIBLIOTECA UTILIZADA: Apenas <stdio.h>
  * ============================================================================
  */
 
 #include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <ctype.h>
 
 #define MAX_FILA 100
 
@@ -44,6 +40,14 @@ int contadorN = 1;
 // Variavel para controlar quem esta sendo atendido no momento
 int temPacienteEmAtendimento = 0;
 Paciente pacienteAtual;
+
+// Funcao propria para converter letras minusculas em maiusculas (sem ctype.h)
+char paraMaiusculo(char c) {
+    if (c >= 'a' && c <= 'z') {
+        return c - ('a' - 'A');
+    }
+    return c;
+}
 
 // Funcao auxiliar para limpar o buffer do teclado
 void limparBuffer() {
@@ -88,7 +92,7 @@ int lerSimNao(char mensagem[]) {
         printf("%s (S/N): ", mensagem);
         scanf(" %c", &resposta);
         limparBuffer();
-        resposta = toupper(resposta);
+        resposta = paraMaiusculo(resposta);
 
         if (resposta == 'S') {
             return 1;
@@ -111,7 +115,7 @@ void registrarNovaSenha() {
         printf("Informe o genero do paciente (M/F): ");
         scanf(" %c", &p.genero);
         limparBuffer();
-        p.genero = toupper(p.genero);
+        p.genero = paraMaiusculo(p.genero);
 
         if (p.genero == 'M' || p.genero == 'F') {
             break;
@@ -198,6 +202,7 @@ void consultarProximaSenha() {
 
 // Modulo 3.2: Registrar chamada de paciente (desenfileira da fila)
 void chamarPaciente() {
+    int i;
     printf("\n--- REGISTRAR CHAMADA DE PACIENTE ---\n");
 
     if (temPacienteEmAtendimento == 1) {
@@ -212,7 +217,7 @@ void chamarPaciente() {
         temPacienteEmAtendimento = 1;
 
         // Desloca os outros pacientes da fila para a esquerda (FIFO)
-        for (int i = 0; i < totalUrgente - 1; i++) {
+        for (i = 0; i < totalUrgente - 1; i++) {
             filaUrgente[i] = filaUrgente[i + 1];
         }
         totalUrgente--;
@@ -227,7 +232,7 @@ void chamarPaciente() {
         pacienteAtual = filaPreferencial[0];
         temPacienteEmAtendimento = 1;
 
-        for (int i = 0; i < totalPreferencial - 1; i++) {
+        for (i = 0; i < totalPreferencial - 1; i++) {
             filaPreferencial[i] = filaPreferencial[i + 1];
         }
         totalPreferencial--;
@@ -242,7 +247,7 @@ void chamarPaciente() {
         pacienteAtual = filaNormal[0];
         temPacienteEmAtendimento = 1;
 
-        for (int i = 0; i < totalNormal - 1; i++) {
+        for (i = 0; i < totalNormal - 1; i++) {
             filaNormal[i] = filaNormal[i + 1];
         }
         totalNormal--;
@@ -287,6 +292,8 @@ void finalizarAtendimento() {
 
 // Modulo 4: Painel textual de chamada
 void exibirPainel() {
+    int i;
+
     printf("\n=======================================================\n");
     printf("              PAINEL DE CHAMADA CLINICA                \n");
     printf("=======================================================\n");
@@ -311,7 +318,7 @@ void exibirPainel() {
     if (totalUrgente == 0) {
         printf("(Vazia)\n");
     } else {
-        for (int i = 0; i < totalUrgente; i++) {
+        for (i = 0; i < totalUrgente; i++) {
             printf("%s ", filaUrgente[i].codigo);
         }
         printf("\n");
@@ -322,7 +329,7 @@ void exibirPainel() {
     if (totalPreferencial == 0) {
         printf("(Vazia)\n");
     } else {
-        for (int i = 0; i < totalPreferencial; i++) {
+        for (i = 0; i < totalPreferencial; i++) {
             printf("%s ", filaPreferencial[i].codigo);
         }
         printf("\n");
@@ -333,7 +340,7 @@ void exibirPainel() {
     if (totalNormal == 0) {
         printf("(Vazia)\n");
     } else {
-        for (int i = 0; i < totalNormal; i++) {
+        for (i = 0; i < totalNormal; i++) {
             printf("%s ", filaNormal[i].codigo);
         }
         printf("\n");
